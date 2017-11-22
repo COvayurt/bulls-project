@@ -1,8 +1,13 @@
 package mongodb.dao.api;
 
-import model.BullsTickerDetail;
+import com.mongodb.client.MongoCollection;
+import model.BullsTicker;
+
+import java.util.List;
 
 public interface BullsTickerDAO {
 
-    void createBullsTickerDetail(BullsTickerDetail bullsTickerDetail);
+    List<BullsTicker> findAllBullsTicker();
+
+    void insertBullsTicker(BullsTicker bullsTicker, MongoCollection collection);
 }

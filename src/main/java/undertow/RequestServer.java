@@ -4,6 +4,7 @@ import io.undertow.Handlers;
 import io.undertow.Undertow;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
+import undertow.handler.FindTickersHandler;
 import undertow.handler.GenerateTickerFromBullsHandler;
 
 public class RequestServer {
@@ -24,7 +25,7 @@ public class RequestServer {
                         host,
                         Handlers.path()
                                 .addExactPath("/tickers/generate", new GenerateTickerFromBullsHandler())
-                                .addExactPath("/tickers/find/all", new GenerateTickerFromBullsHandler())
+                                .addExactPath("/tickers/find/all", new FindTickersHandler())
                 ).build();
 
         server.start();

@@ -4,80 +4,87 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import constant.Constants;
-import model.BullsTickerDetail;
+import model.BullsTicker;
 import model.BullsTickerSignalHistory;
 import mongodb.dao.BullsTickerDAOImpl;
 import mongodb.dao.api.BullsTickerDAO;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import service.api.BullsTickerDetailService;
+import service.api.BullsTickerService;
 import service.api.JSoupManagerService;
 import util.Utils;
 
 
-public class BullsTickerDetailServiceImpl implements BullsTickerDetailService {
+public class BullsTickerServiceImpl implements BullsTickerService {
 
     private JSoupManagerService jSoupManagerService = new JSoupManagerServiceImpl();
-    private BullsTickerDAO bullsTickerDAOImpl = new BullsTickerDAOImpl();
+    private BullsTickerDAO bullsTickerDAO = new BullsTickerDAOImpl();
 
-    public void insertBullsTicker(BullsTickerDetail bullsTickerDetail){
-        bullsTickerDAOImpl.createBullsTickerDetail(bullsTickerDetail);
+    public List<BullsTicker> findBullsTicker(){
+        return bullsTickerDAO.findAllBullsTicker();
     }
 
-    public BullsTickerDetail extractBullsTickerDetailByUrl(String url) {
+    public void insertBullsTicker(BullsTicker bullsTicker, MongoCollection collection ){
+        bullsTickerDAO.insertBullsTicker(bullsTicker, collection);
+    }
+
+    public BullsTicker extractBullsTickerDetailByUrl(String url) {
         Document doc = jSoupManagerService.getDocumentFromUrl(url);
-        BullsTickerDetail bullsTickerDetail = null;
+        BullsTicker bullsTicker = null;
         if (doc != null) {
-            bullsTickerDetail = new BullsTickerDetail();
+            bullsTicker = new BullsTicker();
             String shareShortCode = getShareShortCodeFromDoc(doc);
             if (shareShortCode != null && !shareShortCode.trim().equals("")) {
-                bullsTickerDetail.setTickerShortCode(shareShortCode);
+                bullsTicker.setTickerShortCode(shareShortCode);
             }
 
             String shareLastSignal = getShareLastSignalFromDoc(doc);
             if (shareLastSignal != null && !shareLastSignal.trim().equals("")) {
-                bullsTickerDetail.setLastSignal(shareLastSignal);
+                bullsTicker.setLastSignal(shareLastSignal);
             }
 
             String shareLongName = getShareLongName(doc);
             if (shareLongName != null && !shareLongName.trim().equals("")) {
-                bullsTickerDetail.setTickerLongName(shareLongName);
+                bullsTicker.setTickerLongName(shareLongName);
             }
 
             String shareLastPriceInTL = getShareLastPriceInTL(doc);
             if (shareLastPriceInTL != null && !shareLastPriceInTL.trim().equals("")) {
-                bullsTickerDetail.setLastPriceInTL(new BigDecimal(shareLastPriceInTL));
+                bullsTicker.setLastPriceInTL(new BigDecimal(shareLastPriceInTL));
             }
 
             String shareLastFormation = getShareLastFormation(doc);
             if (shareLastFormation != null && !shareLastFormation.trim().equals("")) {
-                bullsTickerDetail.setLastFormation(shareLastFormation);
+                bullsTicker.setLastFormation(shareLastFormation);
             }
 
             List<BullsTickerSignalHistory> bullsTickerSignalHistoryList = getShareSignalHistory24List(doc);
 
-            bullsTickerDetail.setBullsTickerSignalHistoryList(bullsTickerSignalHistoryList);
-            bullsTickerDetail.setBullUrl(url);
+            bullsTicker.setBullsTickerSignalHistoryList(bullsTickerSignalHistoryList);
+            bullsTicker.setBullUrl(url);
 
-            bullsTickerDetail
+            bullsTicker
                     .setSixMonthIncome(getSignalHistoryIncomeList(doc, Constants.SHARE_SIGNAL_HISTORY_TABLE_06_ID));
-            bullsTickerDetail
+            bullsTicker
                     .setOneYearIncome(getSignalHistoryIncomeList(doc, Constants.SHARE_SIGNAL_HISTORY_TABLE_12_ID));
             if (bullsTickerSignalHistoryList.size() > 0
                     && bullsTickerSignalHistoryList.get(0).getPriceIfDoneWhatTold() != null
                     && bullsTickerSignalHistoryList.get(bullsTickerSignalHistoryList.size() - 1)
                     .getPriceIfDoneWhatTold() != null) {
-                bullsTickerDetail.setTwoYearsIncome(
+                bullsTicker.setTwoYearsIncome(
                         bullsTickerSignalHistoryList.get(0).getPriceIfDoneWhatTold().subtract(bullsTickerSignalHistoryList
                                 .get(bullsTickerSignalHistoryList.size() - 1).getPriceIfDoneWhatTold()));
             }
 
-            System.out.println(bullsTickerDetail.toString());
+            System.out.println(bullsTicker.toString());
         }
 
-        return bullsTickerDetail;
+        return bullsTicker;
     }
 
     private String getShareLastPriceInTL(Document doc) {

@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class BullsTickerDetail {
+public class BullsTicker {
 
 	private String tickerShortCode;
 	private String tickerLongName;

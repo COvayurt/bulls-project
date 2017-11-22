@@ -1,25 +1,32 @@
 package service;
 
 
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import constant.Constants;
-import model.BullsTickerDetail;
-import service.api.BullsTickerDetailService;
+import model.BullsTicker;
+import service.api.BullsTickerService;
 import service.api.BullsTickerStatisticsService;
 
 public class BullsTickerStatisticsServiceImpl implements BullsTickerStatisticsService {
 
-    private BullsTickerDetailService bullsTickerDetailService = new BullsTickerDetailServiceImpl();
+    private BullsTickerService bullsTickerService = new BullsTickerServiceImpl();
 
     public void extractBullsShareStatistics() {
         String tickers[] = Constants.BULLS_SHARES.split(",");
 
+        MongoClient mongoClient = new MongoClient();
+        MongoDatabase database = mongoClient.getDatabase("bulls_project");
+        MongoCollection collection = database.getCollection("BullsTicker");
+
         for (String ticker : tickers) {
             String fullUrl = Constants.BULLS_BASE_URL + "?" + Constants.BULLS_LANG_ATTR + Constants.BULLS_LANGUAGES.get("tr") + "&" + Constants.BULLS_SHARE_ATTR + ticker.trim();
 
-            BullsTickerDetail bullsTickerDetail = bullsTickerDetailService.extractBullsTickerDetailByUrl(fullUrl);
+            BullsTicker bullsTicker = bullsTickerService.extractBullsTickerDetailByUrl(fullUrl);
 
-            if(bullsTickerDetail != null){
-                bullsTickerDetailService.insertBullsTicker(bullsTickerDetail);
+            if(bullsTicker != null){
+                bullsTickerService.insertBullsTicker(bullsTicker, collection);
             }
 
         }
