@@ -53,6 +53,17 @@ public class BullsTickerDAOImpl implements BullsTickerDAO {
     public void insertBullsTicker(BullsTicker bullsTicker, MongoCollection collection) {
 
         if (bullsTicker != null) {
+            List<Document> bullsTickerSignalHistoryListDoc = new ArrayList<>();
+            for (BullsTickerSignalHistory bullsTickerSignalHistory:bullsTicker.getBullsTickerSignalHistoryList()) {
+                Document bullsTickerSignalHistoryDbObject = new Document()
+                        .append("date", bullsTickerSignalHistory.getDate())
+                        .append("price", bullsTickerSignalHistory.getPrice())
+                        .append("signal", bullsTickerSignalHistory.getSignal())
+                        .append("couldEarnMoney", bullsTickerSignalHistory.isCouldEarnMoney())
+                        .append("priceIfDoneWhatTold", bullsTickerSignalHistory.getPriceIfDoneWhatTold());
+                bullsTickerSignalHistoryListDoc.add(bullsTickerSignalHistoryDbObject);
+            }
+
 
             Document bullsTickerDetailDbObject = new Document("tickerShortCode", bullsTicker.getTickerShortCode())
                     .append("tickerLongName", bullsTicker.getTickerLongName())
@@ -60,7 +71,7 @@ public class BullsTickerDAOImpl implements BullsTickerDAO {
                     .append("lastFormation", bullsTicker.getLastFormation())
                     .append("lastPriceInTL", bullsTicker.getLastPriceInTL())
                     .append("sixMonthsSuccessRate", bullsTicker.getSixMonthsSuccessRate())
-                    .append("bullsTickerSignalHistoryList", bullsTicker.getBullsTickerSignalHistoryList())
+                    .append("bullsTickerSignalHistoryList",bullsTickerSignalHistoryListDoc)
                     .append("oneYearSuccessRate", bullsTicker.getOneYearSuccessRate())
                     .append("twoYearsSuccessRate", bullsTicker.getTwoYearsSuccessRate())
                     .append("sixMonthIncome", bullsTicker.getSixMonthIncome())
