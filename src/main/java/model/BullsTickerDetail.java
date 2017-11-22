@@ -9,14 +9,14 @@ import java.util.Date;
 import java.util.List;
 
 
-public class BullsShareDetail {
+public class BullsTickerDetail {
 
-	private String shareShortCode;
-	private String shareLongName;
+	private String tickerShortCode;
+	private String tickerLongName;
 	private String lastSignal;
 	private String lastFormation;
 	private BigDecimal lastPriceInTL;
-	private List<BullsShareSignalHistory> bullsShareSignalHistoryList;
+	private List<BullsTickerSignalHistory> bullsTickerSignalHistoryList;
 	private double sixMonthsSuccessRate;
 	private double oneYearSuccessRate;
 	private double twoYearsSuccessRate;
@@ -24,6 +24,7 @@ public class BullsShareDetail {
 	private BigDecimal sixMonthIncome;
 	private BigDecimal oneYearIncome;
 	private BigDecimal twoYearsIncome;
+
 
 	public BigDecimal getSixMonthIncome() {
 		return sixMonthIncome;
@@ -49,20 +50,20 @@ public class BullsShareDetail {
 		this.twoYearsIncome = twoYearsIncome;
 	}
 
-	public String getShareShortCode() {
-		return shareShortCode;
+	public String getTickerShortCode() {
+		return tickerShortCode;
 	}
 
-	public void setShareShortCode(String shareShortCode) {
-		this.shareShortCode = shareShortCode;
+	public void setTickerShortCode(String tickerShortCode) {
+		this.tickerShortCode = tickerShortCode;
 	}
 
-	public String getShareLongName() {
-		return shareLongName;
+	public String getTickerLongName() {
+		return tickerLongName;
 	}
 
-	public void setShareLongName(String shareLongName) {
-		this.shareLongName = shareLongName;
+	public void setTickerLongName(String tickerLongName) {
+		this.tickerLongName = tickerLongName;
 	}
 
 	public String getLastSignal() {
@@ -89,12 +90,12 @@ public class BullsShareDetail {
 		this.lastPriceInTL = lastPriceInTL;
 	}
 
-	public List<BullsShareSignalHistory> getBullsShareSignalHistoryList() {
-		return bullsShareSignalHistoryList;
+	public List<BullsTickerSignalHistory> getBullsTickerSignalHistoryList() {
+		return bullsTickerSignalHistoryList;
 	}
 
-	public void setBullsShareSignalHistoryList(List<BullsShareSignalHistory> bullsShareSignalHistoryList) {
-		this.bullsShareSignalHistoryList = bullsShareSignalHistoryList;
+	public void setBullsTickerSignalHistoryList(List<BullsTickerSignalHistory> bullsTickerSignalHistoryList) {
+		this.bullsTickerSignalHistoryList = bullsTickerSignalHistoryList;
 		calculateSuccessRateForTimes();
 	}
 
@@ -151,8 +152,8 @@ public class BullsShareDetail {
 		boolean sixMonthsBefore = false;
 		boolean oneYearBefore = false;
 		
-		for (int index = 0; index < bullsShareSignalHistoryList.size(); index++) {
-			Date date = Utils.isDateWithFormatReturnDate(bullsShareSignalHistoryList.get(index).getDate(),
+		for (int index = 0; index < bullsTickerSignalHistoryList.size(); index++) {
+			Date date = Utils.isDateWithFormatReturnDate(bullsTickerSignalHistoryList.get(index).getDate(),
 					Constants.DATE_FORMAT_SITE);
 
 			if (date.before(sixMonthsAgo.getTime()) && !sixMonthsBefore) {
@@ -178,7 +179,7 @@ public class BullsShareDetail {
 				break;
 			}
 		
-			if (bullsShareSignalHistoryList.get(index).isCouldEarnMoney()) {
+			if (bullsTickerSignalHistoryList.get(index).isCouldEarnMoney()) {
 				successCount++;
 			}
 
@@ -199,7 +200,7 @@ public class BullsShareDetail {
 
 	@Override
 	public String toString() {
-		return "[\nshareShortCode=" + shareShortCode + ",\nshareLongName=" + shareLongName + ", \nlastSignal="
+		return "[\ntickerShortCode=" + tickerShortCode + ",\ntickerLongName=" + tickerLongName + ", \nlastSignal="
 				+ lastSignal + ",\nlastFormation=" + lastFormation + ",\nlastPriceInTL=" + lastPriceInTL
 				+ ",\nsixMonthsSuccessRate=%" + sixMonthsSuccessRate + ",\noneYearSuccessRate=%" + oneYearSuccessRate
 				+ ",\ntwoYearsSuccessRate=%" + twoYearsSuccessRate + ",\nsixMonthIncome=" + sixMonthIncome + ",\noneYearIncome=" + oneYearIncome 

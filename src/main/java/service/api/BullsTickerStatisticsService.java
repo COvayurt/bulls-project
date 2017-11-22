@@ -1,6 +1,6 @@
 package service.api;
 
-public interface BullsShareStatisticsService {
+public interface BullsTickerStatisticsService {
 
 	 void extractBullsShareStatistics();
 }

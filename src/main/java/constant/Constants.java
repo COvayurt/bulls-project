@@ -30,7 +30,7 @@ public class Constants {
 	{
 		SHARE_SIGNAL_HISTORY_ACTIONS.put("SAT", "SAT");
 		SHARE_SIGNAL_HISTORY_ACTIONS.put("AL", "AL");
-		
+
 		BULLS_LANGUAGES.put("tr", "tr");
 		BULLS_LANGUAGES.put("en", "en");
 	}
