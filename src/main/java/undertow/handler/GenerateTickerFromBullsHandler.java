@@ -5,7 +5,7 @@ import io.undertow.server.HttpServerExchange;
 import service.BullsTickerStatisticsServiceImpl;
 import service.api.BullsTickerStatisticsService;
 
-public class GenerateTickerFromBullsHandler implements HttpHandler{
+public class GenerateTickerFromBullsHandler extends BaseRegisterHandler implements HttpHandler{
 
     @Override
     public void handleRequest(HttpServerExchange httpServerExchange) throws Exception {

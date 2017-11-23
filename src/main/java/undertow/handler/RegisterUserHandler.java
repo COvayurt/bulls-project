@@ -20,9 +20,9 @@ import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.util.List;
 
-public class RegisterUserHandler implements HttpHandler {
+public class RegisterUserHandler extends BaseRegisterHandler implements HttpHandler {
 
-    private Gson gson = new GsonBuilder().create();
+
 
     @Override
     public void handleRequest(HttpServerExchange httpServerExchange) throws Exception {
@@ -62,24 +62,4 @@ public class RegisterUserHandler implements HttpHandler {
     }
 
 
-    private JsonObject parseRequestBody(HttpServerExchange httpServerExchange) throws IOException {
-        PooledByteBuffer pooledByteBuffer = httpServerExchange.getConnection().getByteBufferPool().allocate();
-        ByteBuffer byteBuffer = pooledByteBuffer.getBuffer();
-
-
-        httpServerExchange.getRequestChannel().read(byteBuffer);
-        int pos = byteBuffer.position();
-        byteBuffer.rewind();
-        byte[] bytes = new byte[pos];
-        byteBuffer.get(bytes);
-
-        String requestBody = new String(bytes, Charset.forName("UTF-8"));
-        JsonParser parser = new JsonParser();
-        JsonObject requestBodyJson = parser.parse(requestBody).getAsJsonObject();
-
-
-        byteBuffer.clear();
-
-        return requestBodyJson;
-    }
 }

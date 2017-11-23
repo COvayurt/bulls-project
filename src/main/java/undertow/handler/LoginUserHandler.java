@@ -17,9 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
-public class LoginUserHandler implements HttpHandler {
-
-    private Gson gson = new GsonBuilder().create();
+public class LoginUserHandler extends BaseRegisterHandler implements HttpHandler {
 
     @Override
     public void handleRequest(HttpServerExchange httpServerExchange) throws Exception {
@@ -62,27 +60,5 @@ public class LoginUserHandler implements HttpHandler {
         }else{
             httpServerExchange.getResponseSender().send("failed login!");
         }
-    }
-
-
-    private JsonObject parseRequestBody(HttpServerExchange httpServerExchange) throws IOException {
-        PooledByteBuffer pooledByteBuffer = httpServerExchange.getConnection().getByteBufferPool().allocate();
-        ByteBuffer byteBuffer = pooledByteBuffer.getBuffer();
-
-
-        httpServerExchange.getRequestChannel().read(byteBuffer);
-        int pos = byteBuffer.position();
-        byteBuffer.rewind();
-        byte[] bytes = new byte[pos];
-        byteBuffer.get(bytes);
-
-        String requestBody = new String(bytes, Charset.forName("UTF-8"));
-        JsonParser parser = new JsonParser();
-        JsonObject requestBodyJson = parser.parse(requestBody).getAsJsonObject();
-
-
-        byteBuffer.clear();
-
-        return requestBodyJson;
     }
 }
