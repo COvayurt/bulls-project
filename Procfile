@@ -1,1 +1,1 @@
-java -jar target/BullsProject-1.0.0-SNAPSHOT-shaded.jar
+web: java -jar target/BullsProject-1.0.0-SNAPSHOT-shaded.jar
