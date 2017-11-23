@@ -17,7 +17,7 @@ public class RequestServer {
     public static void main(String[] args) {
 
         int port = 8080;
-        String host = "localhost";
+        String host = "https://bulls-project.herokuapp.com/";
 
         Undertow server = Undertow
                 .builder()
