@@ -2,6 +2,7 @@ package service;
 
 
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import constant.Constants;
@@ -16,8 +17,10 @@ public class BullsTickerStatisticsServiceImpl implements BullsTickerStatisticsSe
     public void extractBullsShareStatistics() {
         String tickers[] = Constants.BULLS_SHARES.split(",");
 
-        MongoClient mongoClient = new MongoClient();
-        MongoDatabase database = mongoClient.getDatabase("bulls_project");
+        System.setProperty("java.net.preferIPv4Stack" , "true");
+        MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://bulls:bulls*%4010@ds117136.mlab.com:17136/heroku_4gkwzvlq"));
+
+        MongoDatabase database = mongoClient.getDatabase("heroku_4gkwzvlq");
         MongoCollection collection = database.getCollection("BullsTicker");
 
         for (String ticker : tickers) {

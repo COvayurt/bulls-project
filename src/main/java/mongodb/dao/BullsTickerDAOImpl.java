@@ -3,6 +3,7 @@ package mongodb.dao;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
@@ -22,7 +23,9 @@ public class BullsTickerDAOImpl implements BullsTickerDAO {
 
 
     public List<BullsTicker> findAllBullsTicker() {
-        MongoClient mongoClient = new MongoClient("mongodb://bulls:bulls*@10@ds117136.mlab.com:17136/heroku_4gkwzvlq");
+        System.setProperty("java.net.preferIPv4Stack" , "true");
+        MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://bulls:bulls*%4010@ds117136.mlab.com:17136/heroku_4gkwzvlq"));
+
         MongoDatabase database = mongoClient.getDatabase("heroku_4gkwzvlq");
         MongoCollection collection = database.getCollection("BullsTicker");
         MongoCursor cursor = collection.find().iterator();
