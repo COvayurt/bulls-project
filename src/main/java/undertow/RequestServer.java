@@ -10,11 +10,16 @@ public class RequestServer {
 
     public static void main(String[] args) {
 
-        String host = "0.0.0.0";
+        String host = "";
         String port = System.getenv("PORT");
 
-//        String host = "localhost";
-//        String port = "8080";
+        if (port != null && !port.equals("")) {
+            host = "0.0.0.0";
+        } else {
+            host = "localhost";
+            port = "8080";
+        }
+
 
         Undertow server = Undertow
                 .builder()
