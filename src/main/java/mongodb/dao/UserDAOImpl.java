@@ -16,6 +16,7 @@ import org.bson.Document;
 import org.bson.types.Decimal128;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
@@ -23,8 +24,67 @@ public class UserDAOImpl implements UserDAO {
 
     private Gson gson = new GsonBuilder().create();
 
+    public boolean updateUser(User user) {
 
-    public User findUserByUserId(String username) {
+        System.setProperty("java.net.preferIPv4Stack", "true");
+        MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://bulls:bulls*%4010@ds117136.mlab.com:17136/heroku_4gkwzvlq"));
+
+        MongoDatabase database = mongoClient.getDatabase("heroku_4gkwzvlq");
+        MongoCollection collection = database.getCollection("User");
+
+        if (user != null) {
+            Document searchQuery = new Document().append("username", user.getUsername());
+            Document bullsTickerDbObject = marshallUser(user);
+            collection.replaceOne(searchQuery, bullsTickerDbObject);
+            return Boolean.TRUE;
+        }
+
+        return Boolean.FALSE;
+    }
+
+
+    public boolean findUserByAccessToken(String accessToken) {
+        System.setProperty("java.net.preferIPv4Stack", "true");
+        MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://bulls:bulls*%4010@ds117136.mlab.com:17136/heroku_4gkwzvlq"));
+
+        MongoDatabase database = mongoClient.getDatabase("heroku_4gkwzvlq");
+        MongoCollection collection = database.getCollection("User");
+        BasicDBObject field = new BasicDBObject();
+        field.put("accessToken", accessToken);
+        MongoCursor cursor = collection.find(field).iterator();
+
+        while (cursor.hasNext()) {
+            User user = unmarshallUser((Document) cursor.next());
+            Date now = new Date();
+
+            if (user.getTokenExpirationTime() > now.getTime()) {
+                return Boolean.TRUE;
+            }
+        }
+
+        return Boolean.FALSE;
+    }
+
+    public User findUserByUsernamePassword(String username, String password) {
+        System.setProperty("java.net.preferIPv4Stack", "true");
+        MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://bulls:bulls*%4010@ds117136.mlab.com:17136/heroku_4gkwzvlq"));
+
+        MongoDatabase database = mongoClient.getDatabase("heroku_4gkwzvlq");
+        MongoCollection collection = database.getCollection("User");
+        BasicDBObject field = new BasicDBObject();
+        field.put("username", username);
+        field.put("password", password);
+        MongoCursor cursor = collection.find(field).iterator();
+
+        while (cursor.hasNext()) {
+            User user = unmarshallUser((Document) cursor.next());
+            return user;
+        }
+
+        return null;
+    }
+
+    public User findUserByUsername(String username) {
         System.setProperty("java.net.preferIPv4Stack", "true");
         MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://bulls:bulls*%4010@ds117136.mlab.com:17136/heroku_4gkwzvlq"));
 
@@ -59,7 +119,13 @@ public class UserDAOImpl implements UserDAO {
         return userList;
     }
 
-    public boolean registerUser(User user, MongoCollection collection) {
+    public boolean registerUser(User user) {
+
+        System.setProperty("java.net.preferIPv4Stack", "true");
+        MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://bulls:bulls*%4010@ds117136.mlab.com:17136/heroku_4gkwzvlq"));
+
+        MongoDatabase database = mongoClient.getDatabase("heroku_4gkwzvlq");
+        MongoCollection collection = database.getCollection("User");
 
         if (user != null) {
             Document bullsTickerDbObject = marshallUser(user);
