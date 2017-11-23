@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
+import io.undertow.util.Headers;
 import model.BullsTicker;
 import service.BullsTickerServiceImpl;
 import service.BullsTickerStatisticsServiceImpl;
@@ -22,7 +23,8 @@ public class FindTickersHandler implements HttpHandler{
         BullsTickerService ser = new BullsTickerServiceImpl();
         List<BullsTicker> bullsTickerList = ser.findBullsTicker();
 
-        httpServerExchange.getResponseSender().send(gson.toJson(bullsTickerList, BullsTicker.class));
+        httpServerExchange.getResponseHeaders().add(Headers.CONTENT_TYPE,"text/plain; charset=utf-8");
+        httpServerExchange.getResponseSender().send(gson.toJson(bullsTickerList));
     }
 
 }
