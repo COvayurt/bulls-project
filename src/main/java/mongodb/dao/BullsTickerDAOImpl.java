@@ -23,7 +23,7 @@ public class BullsTickerDAOImpl implements BullsTickerDAO {
 
     public List<BullsTicker> findAllBullsTicker() {
         MongoClient mongoClient = new MongoClient("mongodb://bulls:bulls*@10@ds117136.mlab.com:17136/heroku_4gkwzvlq");
-        MongoDatabase database = mongoClient.getDatabase("bulls_project");
+        MongoDatabase database = mongoClient.getDatabase("heroku_4gkwzvlq");
         MongoCollection collection = database.getCollection("BullsTicker");
         MongoCursor cursor = collection.find().iterator();
         List<BullsTicker> bullsTickerList = new ArrayList<>();
