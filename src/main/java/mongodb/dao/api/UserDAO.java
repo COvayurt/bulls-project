@@ -8,7 +8,10 @@ import java.util.List;
 
 public interface UserDAO {
 
+    User findUserByUserId(String username);
+
     List<User> findAllUser();
 
-    void insertUser(User user, MongoCollection collection);
+    boolean registerUser(User user, MongoCollection collection);
+
 }
