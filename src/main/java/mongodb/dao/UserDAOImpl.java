@@ -1,19 +1,14 @@
 package mongodb.dao;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
-import model.BullsTicker;
 import model.User;
-import mongodb.dao.api.BullsTickerDAO;
 import mongodb.dao.api.UserDAO;
 import org.bson.Document;
-import org.bson.types.Decimal128;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,8 +16,6 @@ import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
 
-
-    private Gson gson = new GsonBuilder().create();
 
     public boolean updateUser(User user) {
 

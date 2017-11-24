@@ -2,10 +2,7 @@ package undertow;
 
 import io.undertow.Handlers;
 import io.undertow.Undertow;
-import undertow.handler.FindTickersHandler;
-import undertow.handler.GenerateTickerFromBullsHandler;
-import undertow.handler.LoginUserHandler;
-import undertow.handler.RegisterUserHandler;
+import undertow.handler.*;
 
 public class RequestServer {
 
@@ -29,7 +26,7 @@ public class RequestServer {
                         host,
                         Handlers.path()
                                 .addExactPath("/users/find/{username}", new GenerateTickerFromBullsHandler())
-                                .addExactPath("/users/find/all", new GenerateTickerFromBullsHandler())
+                                .addExactPath("/users/find/all", new FindAllUsersHandler())
                                 .addExactPath("/users/register", new RegisterUserHandler())
                                 .addExactPath("/users/login", new LoginUserHandler())
                                 .addExactPath("/tickers/generate", new GenerateTickerFromBullsHandler())

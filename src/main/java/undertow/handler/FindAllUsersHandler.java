@@ -5,24 +5,26 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
-import model.BullsTicker;
-import service.BullsTickerServiceImpl;
-import service.api.BullsTickerService;
+import model.User;
+import service.BullsTickerStatisticsServiceImpl;
+import service.UserServiceImpl;
+import service.api.BullsTickerStatisticsService;
+import service.api.UserService;
 
 import java.util.List;
 
-public class FindTickersHandler extends BaseRegisterHandler implements HttpHandler{
+public class FindAllUsersHandler extends BaseRegisterHandler implements HttpHandler {
 
     @Override
     public void handleRequest(HttpServerExchange httpServerExchange) throws Exception {
 
-        BullsTickerService ser = new BullsTickerServiceImpl();
-        List<BullsTicker> bullsTickerList = ser.findBullsTicker();
+        UserService ser = new UserServiceImpl();
+        List<User> users = ser.findAllUsers();
 
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        String json = ow.writeValueAsString(bullsTickerList);
+        String json = ow.writeValueAsString(users);
 
-        httpServerExchange.getResponseHeaders().add(Headers.CONTENT_TYPE,"application/json; charset=utf-8");
+        httpServerExchange.getResponseHeaders().add(Headers.CONTENT_TYPE, "application/json; charset=utf-8");
         httpServerExchange.getResponseSender().send(json);
     }
 

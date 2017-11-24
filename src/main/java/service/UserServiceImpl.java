@@ -5,6 +5,8 @@ import mongodb.dao.UserDAOImpl;
 import mongodb.dao.api.UserDAO;
 import service.api.UserService;
 
+import java.util.List;
+
 
 public class UserServiceImpl implements UserService {
 
@@ -12,6 +14,10 @@ public class UserServiceImpl implements UserService {
 
    public boolean checkAccessToken(String accessToken){
       return userDAO.findUserByAccessToken(accessToken);
+   }
+
+   public List<User> findAllUsers(){
+      return userDAO.findAllUser();
    }
 
    public boolean updateUser(User user){

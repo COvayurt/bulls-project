@@ -1,7 +1,5 @@
 package mongodb.dao;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
@@ -17,8 +15,6 @@ import java.util.List;
 
 public class BullsTickerDAOImpl implements BullsTickerDAO {
 
-
-    private Gson gson = new GsonBuilder().create();
 
 
 
