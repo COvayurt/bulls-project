@@ -2,8 +2,8 @@ package undertow.handler;
 
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
-import service.BullsTickerStatisticsServiceImpl;
-import service.api.BullsTickerStatisticsService;
+import service.BullsTickerServiceImpl;
+import service.api.BullsTickerService;
 
 public class GenerateTickerFromBullsHandler extends BaseRegisterHandler implements HttpHandler{
 
@@ -12,7 +12,7 @@ public class GenerateTickerFromBullsHandler extends BaseRegisterHandler implemen
 
 
         Thread te = new Thread(() -> {
-            BullsTickerStatisticsService ser = new BullsTickerStatisticsServiceImpl();
+            BullsTickerService ser = new BullsTickerServiceImpl();
             ser.extractBullsShareStatistics();
         });
 

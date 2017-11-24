@@ -6,9 +6,7 @@ import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
 import model.User;
-import service.BullsTickerStatisticsServiceImpl;
 import service.UserServiceImpl;
-import service.api.BullsTickerStatisticsService;
 import service.api.UserService;
 
 import java.util.List;

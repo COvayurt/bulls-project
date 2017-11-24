@@ -36,7 +36,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
 
-    public boolean findUserByAccessToken(String accessToken) {
+    public boolean findUserByAccessToken(String accessToken, String username) {
         System.setProperty("java.net.preferIPv4Stack", "true");
         MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://bulls:bulls*%4010@ds117136.mlab.com:17136/heroku_4gkwzvlq"));
 
@@ -44,6 +44,7 @@ public class UserDAOImpl implements UserDAO {
         MongoCollection collection = database.getCollection("User");
         BasicDBObject field = new BasicDBObject();
         field.put("accessToken", accessToken);
+        field.put("username", username);
         MongoCursor cursor = collection.find(field).iterator();
 
         while (cursor.hasNext()) {

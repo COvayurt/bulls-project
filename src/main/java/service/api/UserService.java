@@ -6,6 +6,10 @@ import java.util.List;
 
 public interface UserService {
 
+    boolean checkAccessToken(String accessToken, String username);
+
+    User findUserByUsername(String username);
+
     List<User> findAllUsers();
 
     boolean updateUser(User user);

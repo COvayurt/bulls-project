@@ -8,7 +8,7 @@ public interface UserDAO {
 
     boolean updateUser(User user);
 
-    boolean findUserByAccessToken(String accessToken);
+    boolean findUserByAccessToken(String accessToken, String username);
 
     User findUserByUsernamePassword(String username, String password);
 

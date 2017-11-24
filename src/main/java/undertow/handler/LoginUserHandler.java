@@ -39,7 +39,7 @@ public class LoginUserHandler extends BaseRegisterHandler implements HttpHandler
                 user.setAccessToken(accessToken);
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(new Date());
-                cal.set(Calendar.MINUTE, 2);
+                cal.add(Calendar.MINUTE, 30);
                 user.setTokenExpirationTime(cal.getTime().getTime());
                 success = userService.updateUser(user);
             }

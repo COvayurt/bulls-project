@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import constant.BullsTickerSignal;
 import constant.Constants;
 import model.BullsTicker;
 import model.BullsTickerSignalHistory;
@@ -25,11 +27,48 @@ public class BullsTickerServiceImpl implements BullsTickerService {
     private JSoupManagerService jSoupManagerService = new JSoupManagerServiceImpl();
     private BullsTickerDAO bullsTickerDAO = new BullsTickerDAOImpl();
 
-    public List<BullsTicker> findBullsTicker(){
+
+    public List<BullsTicker> extractValuableBullsTickersForUser(String lastSignal, String tickerShortCode, Double sixMonthsSuccessRate, Boolean sixMonthsSuccessRateGreater,
+                                                                Double oneYearSuccessRate, Boolean oneYearSuccessRateGreater, Double twoYearsSuccessRate, Boolean twoYearsSuccessRateGreater,
+                                                                Double lastPriceInTL, Boolean lastPriceInTLGreater, Double sixMonthIncome, Boolean sixMonthIncomeGreater,
+                                                                Double oneYearIncome, Boolean oneYearIncomeGreater, Double twoYearsIncome, Boolean twoYearsIncomeGreater) {
+        return bullsTickerDAO.findTickersByQuery(lastSignal, tickerShortCode,
+                sixMonthsSuccessRate, sixMonthsSuccessRateGreater,
+                oneYearSuccessRate, oneYearSuccessRateGreater,
+                twoYearsSuccessRate, twoYearsSuccessRateGreater,
+                lastPriceInTL, lastPriceInTLGreater,
+                sixMonthIncome, sixMonthIncomeGreater,
+                oneYearIncome, oneYearIncomeGreater,
+                twoYearsIncome, twoYearsIncomeGreater);
+    }
+
+
+    public void extractBullsShareStatistics() {
+        String tickers[] = Constants.BULLS_SHARES.split(",");
+
+        System.setProperty("java.net.preferIPv4Stack", "true");
+        MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://bulls:bulls*%4010@ds117136.mlab.com:17136/heroku_4gkwzvlq"));
+
+        MongoDatabase database = mongoClient.getDatabase("heroku_4gkwzvlq");
+        MongoCollection collection = database.getCollection("BullsTicker");
+
+        for (String ticker : tickers) {
+            String fullUrl = Constants.BULLS_BASE_URL + "?" + Constants.BULLS_LANG_ATTR + Constants.BULLS_LANGUAGES.get("tr") + "&" + Constants.BULLS_SHARE_ATTR + ticker.trim();
+
+            BullsTicker bullsTicker = extractBullsTickerDetailByUrl(fullUrl);
+
+            if (bullsTicker != null) {
+                insertBullsTicker(bullsTicker, collection);
+            }
+
+        }
+    }
+
+    public List<BullsTicker> findBullsTicker() {
         return bullsTickerDAO.findAllBullsTicker();
     }
 
-    public void insertBullsTicker(BullsTicker bullsTicker, MongoCollection collection ){
+    public void insertBullsTicker(BullsTicker bullsTicker, MongoCollection collection) {
         bullsTickerDAO.insertBullsTicker(bullsTicker, collection);
     }
 

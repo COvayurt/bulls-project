@@ -13,11 +13,12 @@ public class RequestServer {
             .post("/users/register", new RegisterUserHandler())
             .post("/users/login", new LoginUserHandler())
             .get("/tickers/generate", new GenerateTickerFromBullsHandler())
+            .post("/tickers/valuables/{username}", new ExtractValuableTickersForUserHandler())
             .get("/tickers/find/all", new FindTickersHandler());
 
     public static void main(String[] args) {
 
-        String host = "";
+        String host;
         String port = System.getenv("PORT");
 
         if (port != null && !port.equals("")) {

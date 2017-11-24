@@ -8,6 +8,8 @@ import io.undertow.server.HttpServerExchange;
 import io.undertow.server.handlers.form.FormData;
 import io.undertow.server.handlers.form.FormDataParser;
 import io.undertow.server.handlers.form.FormParserFactory;
+import service.UserServiceImpl;
+import service.api.UserService;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -18,8 +20,12 @@ import java.util.Map;
 
 public class BaseRegisterHandler {
 
-    protected Map<String, Deque<String>> getPathParams(HttpServerExchange httpServerExchange){
-        return httpServerExchange.getPathParameters();
+
+
+    protected boolean checkAccessToken(String accessToken, String username){
+        UserService userService = new UserServiceImpl();
+
+        return userService.checkAccessToken(accessToken, username);
     }
 
     protected JsonNode parseRequestBodyJson(HttpServerExchange httpServerExchange) throws IOException {
