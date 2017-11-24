@@ -1,11 +1,19 @@
 package undertow;
 
-import io.undertow.Handlers;
 import io.undertow.Undertow;
+import io.undertow.server.HttpHandler;
+import io.undertow.server.RoutingHandler;
 import undertow.handler.*;
 
 public class RequestServer {
 
+    private static final HttpHandler ROUTES = new RoutingHandler()
+            .get("/users/find/{username}", new FindUserHandler())
+            .get("/users/find/all", new FindAllUsersHandler())
+            .post("/users/register", new RegisterUserHandler())
+            .post("/users/login", new LoginUserHandler())
+            .get("/tickers/generate", new GenerateTickerFromBullsHandler())
+            .get("/tickers/find/all", new FindTickersHandler());
 
     public static void main(String[] args) {
 
@@ -20,18 +28,7 @@ public class RequestServer {
         }
 
 
-        Undertow server = Undertow
-                .builder()
-                .addHttpListener(Integer.parseInt(port),
-                        host,
-                        Handlers.path()
-                                .addExactPath("/users/find/{username}", new GenerateTickerFromBullsHandler())
-                                .addExactPath("/users/find/all", new FindAllUsersHandler())
-                                .addExactPath("/users/register", new RegisterUserHandler())
-                                .addExactPath("/users/login", new LoginUserHandler())
-                                .addExactPath("/tickers/generate", new GenerateTickerFromBullsHandler())
-                                .addExactPath("/tickers/find/all", new FindTickersHandler())
-                ).build();
+        Undertow server = Undertow.builder().addHttpListener(Integer.parseInt(port), host, ROUTES).build();
 
         server.start();
     }

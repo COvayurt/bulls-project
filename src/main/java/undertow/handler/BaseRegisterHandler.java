@@ -12,10 +12,15 @@ import io.undertow.server.handlers.form.FormParserFactory;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.util.Deque;
 import java.util.Iterator;
+import java.util.Map;
 
 public class BaseRegisterHandler {
 
+    protected Map<String, Deque<String>> getPathParams(HttpServerExchange httpServerExchange){
+        return httpServerExchange.getPathParameters();
+    }
 
     protected JsonNode parseRequestBodyJson(HttpServerExchange httpServerExchange) throws IOException {
         PooledByteBuffer pooledByteBuffer = httpServerExchange.getConnection().getByteBufferPool().allocate();
