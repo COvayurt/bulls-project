@@ -15,6 +15,7 @@ public class BullsTicker {
 	private String tickerLongName;
 	private String lastSignal;
 	private String lastFormation;
+	private Long updateDate;
 	private BigDecimal lastPriceInTL;
 	private List<BullsTickerSignalHistory> bullsTickerSignalHistoryList;
 	private double sixMonthsSuccessRate;
@@ -25,6 +26,14 @@ public class BullsTicker {
 	private BigDecimal oneYearIncome;
 	private BigDecimal twoYearsIncome;
 
+
+	public Long getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(Long updateDate) {
+		this.updateDate = updateDate;
+	}
 
 	public BigDecimal getSixMonthIncome() {
 		return sixMonthIncome;

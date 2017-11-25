@@ -68,4 +68,17 @@ public class User {
 	public void setUserFollowTickers(List<BullsTicker> userFollowTickers) {
 		this.userFollowTickers = userFollowTickers;
 	}
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"username='" + username + '\'' +
+				", password='" + password + '\'' +
+				", email='" + email + '\'' +
+				", nameSurname='" + nameSurname + '\'' +
+				", accessToken='" + accessToken + '\'' +
+				", tokenExpirationTime=" + tokenExpirationTime +
+				", userFollowTickers=" + userFollowTickers +
+				'}';
+	}
 }

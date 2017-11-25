@@ -11,6 +11,7 @@ import mongodb.dao.api.BullsTickerDAO;
 import org.apache.commons.lang3.StringUtils;
 import org.bson.Document;
 import org.bson.types.Decimal128;
+import util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +62,7 @@ public class BullsTickerDAOImpl implements BullsTickerDAO {
         }
 
         for (Object bullsTickerObject : collection.find(field)) {
-            BullsTicker bullsTicker = unmarshallTicker((Document) bullsTickerObject);
+            BullsTicker bullsTicker = Utils.unmarshallTicker((Document) bullsTickerObject);
             if (bullsTicker != null) {
                 bullsTickerList.add(bullsTicker);
             }
@@ -80,7 +81,7 @@ public class BullsTickerDAOImpl implements BullsTickerDAO {
         MongoCursor cursor = collection.find().iterator();
         List<BullsTicker> bullsTickerList = new ArrayList<>();
         while (cursor.hasNext()) {
-            BullsTicker bullsTicker = unmarshallTicker((Document) cursor.next());
+            BullsTicker bullsTicker = Utils.unmarshallTicker((Document) cursor.next());
             bullsTickerList.add(bullsTicker);
         }
         return bullsTickerList;
@@ -90,7 +91,7 @@ public class BullsTickerDAOImpl implements BullsTickerDAO {
 
         if (bullsTicker != null) {
 
-            Document bullsTickerDbObject = marshallTicker(bullsTicker);
+            Document bullsTickerDbObject = Utils.marshallTicker(bullsTicker);
 
 
             collection.insertOne(bullsTickerDbObject);
@@ -99,37 +100,7 @@ public class BullsTickerDAOImpl implements BullsTickerDAO {
     }
 
 
-    private BullsTicker unmarshallTicker(Document tickerMongoDbDoc) {
-        BullsTicker ticker = new BullsTicker();
-        ticker.setTickerShortCode((String) tickerMongoDbDoc.get("tickerShortCode"));
-        ticker.setTickerLongName((String) tickerMongoDbDoc.get("tickerLongName"));
-        ticker.setLastSignal((String) tickerMongoDbDoc.get("lastSignal"));
-        ticker.setLastFormation((String) tickerMongoDbDoc.get("lastFormation"));
-        ticker.setLastPriceInTL(((Decimal128) tickerMongoDbDoc.get("lastPriceInTL")).bigDecimalValue());
-        ticker.setSixMonthsSuccessRate((Double) tickerMongoDbDoc.get("sixMonthsSuccessRate"));
-        ticker.setOneYearSuccessRate((Double) tickerMongoDbDoc.get("oneYearSuccessRate"));
-        ticker.setTwoYearsSuccessRate((Double) tickerMongoDbDoc.get("twoYearsSuccessRate"));
-        ticker.setBullUrl((String) tickerMongoDbDoc.get("bullUrl"));
-        ticker.setSixMonthIncome(((Decimal128) tickerMongoDbDoc.get("sixMonthIncome")).bigDecimalValue());
-        ticker.setOneYearIncome(((Decimal128) tickerMongoDbDoc.get("oneYearIncome")).bigDecimalValue());
-        ticker.setTwoYearsIncome(((Decimal128) tickerMongoDbDoc.get("twoYearsIncome")).bigDecimalValue());
 
-        return ticker;
-    }
 
-    private Document marshallTicker(BullsTicker bullsTicker) {
-        return new Document("tickerShortCode", bullsTicker.getTickerShortCode())
-                .append("tickerLongName", bullsTicker.getTickerLongName())
-                .append("lastSignal", bullsTicker.getLastSignal())
-                .append("lastFormation", bullsTicker.getLastFormation())
-                .append("lastPriceInTL", bullsTicker.getLastPriceInTL())
-                .append("sixMonthsSuccessRate", bullsTicker.getSixMonthsSuccessRate())
-                .append("oneYearSuccessRate", bullsTicker.getOneYearSuccessRate())
-                .append("twoYearsSuccessRate", bullsTicker.getTwoYearsSuccessRate())
-                .append("sixMonthIncome", bullsTicker.getSixMonthIncome())
-                .append("oneYearIncome", bullsTicker.getOneYearIncome())
-                .append("twoYearsIncome", bullsTicker.getTwoYearsIncome())
-                .append("bullUrl", bullsTicker.getBullUrl());
-    }
 
 }

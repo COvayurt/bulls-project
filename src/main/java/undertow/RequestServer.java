@@ -12,6 +12,8 @@ public class RequestServer {
             .get("/users/find/all", new FindAllUsersHandler())
             .post("/users/register", new RegisterUserHandler())
             .post("/users/login", new LoginUserHandler())
+            .post("/users/add-ticker", new AddTickerToUserHandler())
+            .post("/users/remove-ticker", new RemoveTickerFromUserHandler())
             .get("/tickers/generate", new GenerateTickerFromBullsHandler())
             .post("/tickers/valuables/{username}", new ExtractValuableTickersForUserHandler())
             .get("/tickers/find/all", new FindTickersHandler());

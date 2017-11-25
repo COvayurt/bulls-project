@@ -28,10 +28,10 @@ public class BullsTickerServiceImpl implements BullsTickerService {
     private BullsTickerDAO bullsTickerDAO = new BullsTickerDAOImpl();
 
 
-    public List<BullsTicker> extractValuableBullsTickersForUser(String lastSignal, String tickerShortCode, Double sixMonthsSuccessRate, Boolean sixMonthsSuccessRateGreater,
-                                                                Double oneYearSuccessRate, Boolean oneYearSuccessRateGreater, Double twoYearsSuccessRate, Boolean twoYearsSuccessRateGreater,
-                                                                Double lastPriceInTL, Boolean lastPriceInTLGreater, Double sixMonthIncome, Boolean sixMonthIncomeGreater,
-                                                                Double oneYearIncome, Boolean oneYearIncomeGreater, Double twoYearsIncome, Boolean twoYearsIncomeGreater) {
+    public List<BullsTicker> findTickersByQuery(String lastSignal, String tickerShortCode, Double sixMonthsSuccessRate, Boolean sixMonthsSuccessRateGreater,
+                                                Double oneYearSuccessRate, Boolean oneYearSuccessRateGreater, Double twoYearsSuccessRate, Boolean twoYearsSuccessRateGreater,
+                                                Double lastPriceInTL, Boolean lastPriceInTLGreater, Double sixMonthIncome, Boolean sixMonthIncomeGreater,
+                                                Double oneYearIncome, Boolean oneYearIncomeGreater, Double twoYearsIncome, Boolean twoYearsIncomeGreater) {
         return bullsTickerDAO.findTickersByQuery(lastSignal, tickerShortCode,
                 sixMonthsSuccessRate, sixMonthsSuccessRateGreater,
                 oneYearSuccessRate, oneYearSuccessRateGreater,

@@ -3,9 +3,7 @@ package undertow.handler;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.node.DoubleNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import constant.BullsTickerSignal;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
@@ -105,7 +103,7 @@ public class ExtractValuableTickersForUserHandler extends BaseRegisterHandler im
             if (!StringUtils.isEmpty(accessToken) && !StringUtils.isEmpty(username)) {
                 accessTokenSuccess = checkAccessToken(accessToken, username);
                 if (accessTokenSuccess) {
-                    bullsTickerList = bullsTickerService.extractValuableBullsTickersForUser(lastSignal, tickerShortCode,
+                    bullsTickerList = bullsTickerService.findTickersByQuery(lastSignal, tickerShortCode,
                             sixMonthsSuccessRate, sixMonthsSuccessRateGreater,
                             oneYearSuccessRate, oneYearSuccessRateGreater,
                             twoYearsSuccessRate, twoYearsSuccessRateGreater,
@@ -127,6 +125,7 @@ public class ExtractValuableTickersForUserHandler extends BaseRegisterHandler im
             ObjectNode resultNode = mapper.createObjectNode();
             resultNode.put("success", accessTokenSuccess);
             resultNode.put("message", "session has been ended! please login.");
+            httpServerExchange.getResponseSender().send(resultNode.textValue());
         }
 
 
