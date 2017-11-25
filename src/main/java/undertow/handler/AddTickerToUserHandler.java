@@ -62,6 +62,6 @@ public class AddTickerToUserHandler extends BaseRegisterHandler implements HttpH
             resultNode.put("message", "failed adding ticker to user!");
         }
 
-        httpServerExchange.getResponseSender().send(resultNode.textValue());
+        httpServerExchange.getResponseSender().send(resultNode.toString());
     }
 }

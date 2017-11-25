@@ -66,6 +66,6 @@ public class RemoveTickerFromUserHandler extends BaseRegisterHandler implements 
             resultNode.put("message", "failed adding ticker to user!");
         }
 
-        httpServerExchange.getResponseSender().send(resultNode.textValue());
+        httpServerExchange.getResponseSender().send(resultNode.toString());
     }
 }

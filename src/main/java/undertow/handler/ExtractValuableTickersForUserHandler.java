@@ -125,7 +125,7 @@ public class ExtractValuableTickersForUserHandler extends BaseRegisterHandler im
             ObjectNode resultNode = mapper.createObjectNode();
             resultNode.put("success", accessTokenSuccess);
             resultNode.put("message", "session has been ended! please login.");
-            httpServerExchange.getResponseSender().send(resultNode.textValue());
+            httpServerExchange.getResponseSender().send(resultNode.toString());
         }
 
 
