@@ -16,7 +16,7 @@ public interface BullsTickerService {
 
 	List<BullsTicker> findBullsTicker();
 
-	BullsTicker extractBullsTickerDetailByUrl(String url);
+	BullsTicker extractBullsTickerDetailByUrl(String url, String lang);
 
 	void insertBullsTicker(BullsTicker bullsTicker, MongoCollection collection );
 }

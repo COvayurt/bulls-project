@@ -11,6 +11,7 @@ import java.util.List;
 
 public class BullsTicker {
 
+	private String tickerLang;
 	private String tickerShortCode;
 	private String tickerLongName;
 	private String lastSignal;
@@ -26,6 +27,13 @@ public class BullsTicker {
 	private BigDecimal oneYearIncome;
 	private BigDecimal twoYearsIncome;
 
+	public String getTickerLang() {
+		return tickerLang;
+	}
+
+	public void setTickerLang(String tickerLang) {
+		this.tickerLang = tickerLang;
+	}
 
 	public Long getUpdateDate() {
 		return updateDate;

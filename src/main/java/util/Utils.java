@@ -1,6 +1,5 @@
 package util;
 
-import com.mongodb.BasicDBObject;
 import model.BullsTicker;
 import model.User;
 import org.bson.Document;
@@ -45,8 +44,6 @@ public class Utils {
             docList.add(tickerDoc);
         }
 
-//		BasicDBObject doc = new BasicDBObject("_id", "ArrayList").append("userFollowTickers", user.getUserFollowTickers());
-
         return new Document("username", user.getUsername())
                 .append("password", user.getPassword())
                 .append("email", user.getEmail())
@@ -70,11 +67,13 @@ public class Utils {
                 .append("sixMonthIncome", bullsTicker.getSixMonthIncome())
                 .append("oneYearIncome", bullsTicker.getOneYearIncome())
                 .append("twoYearsIncome", bullsTicker.getTwoYearsIncome())
-                .append("bullUrl", bullsTicker.getBullUrl());
+                .append("bullUrl", bullsTicker.getBullUrl())
+                .append("tickerLang", bullsTicker.getTickerLang());
     }
 
     public static BullsTicker unmarshallTicker(Document tickerMongoDbDoc) {
         BullsTicker ticker = new BullsTicker();
+        ticker.setTickerLang((String) tickerMongoDbDoc.get("tickerLang"));
         ticker.setTickerShortCode((String) tickerMongoDbDoc.get("tickerShortCode"));
         ticker.setTickerLongName((String) tickerMongoDbDoc.get("tickerLongName"));
         ticker.setLastSignal((String) tickerMongoDbDoc.get("lastSignal"));

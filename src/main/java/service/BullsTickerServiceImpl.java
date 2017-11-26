@@ -55,7 +55,7 @@ public class BullsTickerServiceImpl implements BullsTickerService {
         for (String ticker : tickers) {
             String fullUrl = Constants.BULLS_BASE_URL + "?" + Constants.BULLS_LANG_ATTR + Constants.BULLS_LANGUAGES.get("tr") + "&" + Constants.BULLS_SHARE_ATTR + ticker.trim();
 
-            BullsTicker bullsTicker = extractBullsTickerDetailByUrl(fullUrl);
+            BullsTicker bullsTicker = extractBullsTickerDetailByUrl(fullUrl, Constants.BULLS_LANGUAGES.get("tr"));
 
             if (bullsTicker != null) {
                 insertBullsTicker(bullsTicker, collection);
@@ -72,7 +72,7 @@ public class BullsTickerServiceImpl implements BullsTickerService {
         bullsTickerDAO.insertBullsTicker(bullsTicker, collection);
     }
 
-    public BullsTicker extractBullsTickerDetailByUrl(String url) {
+    public BullsTicker extractBullsTickerDetailByUrl(String url, String lang) {
         Document doc = jSoupManagerService.getDocumentFromUrl(url);
         BullsTicker bullsTicker = null;
         if (doc != null) {

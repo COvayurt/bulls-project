@@ -121,6 +121,9 @@ public class UserDAOImpl implements UserDAO {
 
         MongoDatabase database = mongoClient.getDatabase("heroku_4gkwzvlq");
         MongoCollection collection = database.getCollection("User");
+        if (findUserByUsername(user.getUsername()) != null) {
+            return Boolean.FALSE;
+        }
 
         if (user != null) {
             Document bullsTickerDbObject = Utils.marshallUser(user);
@@ -130,8 +133,6 @@ public class UserDAOImpl implements UserDAO {
 
         return Boolean.FALSE;
     }
-
-
 
 
 }
