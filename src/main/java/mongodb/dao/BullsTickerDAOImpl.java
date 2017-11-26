@@ -21,7 +21,7 @@ public class BullsTickerDAOImpl implements BullsTickerDAO {
     public List<BullsTicker> findTickersByQuery(String lastSignal, String tickerShortCode, Double sixMonthsSuccessRate, Boolean sixMonthsSuccessRateGreater,
                                                 Double oneYearSuccessRate, Boolean oneYearSuccessRateGreater, Double twoYearsSuccessRate, Boolean twoYearsSuccessRateGreater,
                                                 Double lastPriceInTL, Boolean lastPriceInTLGreater, Double sixMonthIncome, Boolean sixMonthIncomeGreater,
-                                                Double oneYearIncome, Boolean oneYearIncomeGreater, Double twoYearsIncome, Boolean twoYearsIncomeGreater) {
+                                                Double oneYearIncome, Boolean oneYearIncomeGreater, Double twoYearsIncome, Boolean twoYearsIncomeGreater, String tickerLang) {
 
         System.setProperty("java.net.preferIPv4Stack", "true");
         MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://bulls:bulls*%4010@ds117136.mlab.com:17136/heroku_4gkwzvlq"));
@@ -30,6 +30,9 @@ public class BullsTickerDAOImpl implements BullsTickerDAO {
         MongoCollection collection = database.getCollection("BullsTicker");
         List<BullsTicker> bullsTickerList = new ArrayList<>();
         BasicDBObject field = new BasicDBObject();
+        if (!StringUtils.isEmpty(lastSignal)) {
+            field.put("tickerLang", tickerLang);
+        }
         if (!StringUtils.isEmpty(lastSignal)) {
             field.put("lastSignal", lastSignal);
         }
@@ -61,12 +64,16 @@ public class BullsTickerDAOImpl implements BullsTickerDAO {
             field.put("twoYearsIncome", new BasicDBObject(twoYearsIncomeGreater ? "$gt" : "$lt", twoYearsIncome));
         }
 
+
         for (Object bullsTickerObject : collection.find(field)) {
             BullsTicker bullsTicker = Utils.unmarshallTicker((Document) bullsTickerObject);
             if (bullsTicker != null) {
                 bullsTickerList.add(bullsTicker);
             }
         }
+
+
+
 
         return bullsTickerList;
     }

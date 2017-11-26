@@ -221,7 +221,7 @@ public class BullsTicker {
 				+ lastSignal + ",\nlastFormation=" + lastFormation + ",\nlastPriceInTL=" + lastPriceInTL
 				+ ",\nsixMonthsSuccessRate=%" + sixMonthsSuccessRate + ",\noneYearSuccessRate=%" + oneYearSuccessRate
 				+ ",\ntwoYearsSuccessRate=%" + twoYearsSuccessRate + ",\nsixMonthIncome=" + sixMonthIncome + ",\noneYearIncome=" + oneYearIncome 
-				+ ",\ntwoYearsIncome=" + twoYearsIncome + ",\nbullUrl=" + bullUrl + "\n]\n\n";
+				+ ",\ntwoYearsIncome=" + twoYearsIncome + ",\nbullUrl=" + bullUrl + ",\ntickerLang=" + tickerLang + "\n]\n\n";
 	}
 
 }

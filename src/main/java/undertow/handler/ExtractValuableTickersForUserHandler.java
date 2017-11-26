@@ -33,6 +33,7 @@ public class ExtractValuableTickersForUserHandler extends BaseRegisterHandler im
             String accessToken = payload.get("accessToken").textValue();
             String username = params.get("username").getFirst();
 
+            String tickerLang = null;
             String lastSignal = null;
             String tickerShortCode = null;
             Double sixMonthsSuccessRate = null;
@@ -50,6 +51,9 @@ public class ExtractValuableTickersForUserHandler extends BaseRegisterHandler im
             Double twoYearsIncome = null;
             Boolean twoYearsIncomeGreater = null;
 
+            if (params.get("tickerLang") != null) {
+                tickerLang = params.get("tickerLang").getFirst();
+            }
             if (params.get("lastSignal") != null) {
                 lastSignal = params.get("lastSignal").getFirst();
             }
@@ -110,7 +114,7 @@ public class ExtractValuableTickersForUserHandler extends BaseRegisterHandler im
                             lastPriceInTL, lastPriceInTLGreater,
                             sixMonthIncome, sixMonthIncomeGreater,
                             oneYearIncome, oneYearIncomeGreater,
-                            twoYearsIncome, twoYearsIncomeGreater);
+                            twoYearsIncome, twoYearsIncomeGreater, tickerLang);
                 }
             }
         }

@@ -39,7 +39,7 @@ public class AddTickerToUserHandler extends BaseRegisterHandler implements HttpH
             UserService userService = new UserServiceImpl();
             User user = userService.findUserByUsername(username);
             BullsTickerService bullsTickerService = new BullsTickerServiceImpl();
-            List<BullsTicker> ticker = bullsTickerService.findTickersByQuery(null, tickerShortCode, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+            List<BullsTicker> ticker = bullsTickerService.findTickersByQuery(null, tickerShortCode, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
 
             if (user != null && ticker != null && ticker.size() == 1) {

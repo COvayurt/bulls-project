@@ -31,7 +31,7 @@ public class BullsTickerServiceImpl implements BullsTickerService {
     public List<BullsTicker> findTickersByQuery(String lastSignal, String tickerShortCode, Double sixMonthsSuccessRate, Boolean sixMonthsSuccessRateGreater,
                                                 Double oneYearSuccessRate, Boolean oneYearSuccessRateGreater, Double twoYearsSuccessRate, Boolean twoYearsSuccessRateGreater,
                                                 Double lastPriceInTL, Boolean lastPriceInTLGreater, Double sixMonthIncome, Boolean sixMonthIncomeGreater,
-                                                Double oneYearIncome, Boolean oneYearIncomeGreater, Double twoYearsIncome, Boolean twoYearsIncomeGreater) {
+                                                Double oneYearIncome, Boolean oneYearIncomeGreater, Double twoYearsIncome, Boolean twoYearsIncomeGreater, String tickerLang) {
         return bullsTickerDAO.findTickersByQuery(lastSignal, tickerShortCode,
                 sixMonthsSuccessRate, sixMonthsSuccessRateGreater,
                 oneYearSuccessRate, oneYearSuccessRateGreater,
@@ -39,7 +39,7 @@ public class BullsTickerServiceImpl implements BullsTickerService {
                 lastPriceInTL, lastPriceInTLGreater,
                 sixMonthIncome, sixMonthIncomeGreater,
                 oneYearIncome, oneYearIncomeGreater,
-                twoYearsIncome, twoYearsIncomeGreater);
+                twoYearsIncome, twoYearsIncomeGreater, tickerLang);
     }
 
 
@@ -119,6 +119,8 @@ public class BullsTickerServiceImpl implements BullsTickerService {
                         bullsTickerSignalHistoryList.get(0).getPriceIfDoneWhatTold().subtract(bullsTickerSignalHistoryList
                                 .get(bullsTickerSignalHistoryList.size() - 1).getPriceIfDoneWhatTold()));
             }
+
+            bullsTicker.setTickerLang(lang);
 
             System.out.println(bullsTicker.toString());
         }
